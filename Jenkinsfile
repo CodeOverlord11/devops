@@ -46,17 +46,19 @@ pipeline {
             }
         }
 
-       stage('Health Check') {
-    steps {
-        echo '✅ Checking container is running...'
-        sh '''
-            sleep 3
-            docker inspect -f '{{.State.Running}}' $CONTAINER_NAME | grep -q true \
-                || (echo "❌ Container is not running!" && exit 1)
-            echo "✅ Container is up and running!"
-        '''
+        stage('Health Check') {
+            steps {
+                echo '✅ Checking container is running...'
+                sh '''
+                    sleep 3
+                    docker inspect -f '{{.State.Running}}' $CONTAINER_NAME | grep -q true \
+                        || (echo "❌ Container is not running!" && exit 1)
+                    echo "✅ Container is up and running!"
+                '''
+            }
+        }
+
     }
-}
 
     post {
         success {
