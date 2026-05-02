@@ -9,7 +9,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro   # enables /stub_status for metrics
+  - ./monitoring:/etc/prometheus:ro # enables /stub_status for metrics
     restart: unless-stopped
 
   
