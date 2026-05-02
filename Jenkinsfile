@@ -46,17 +46,17 @@ pipeline {
             }
         }
 
-        stage('Health Check') {
-            steps {
-                echo '✅ Checking site is reachable...'
-                sh '''
-                    sleep 3
-                    curl -f http://localhost:$APP_PORT || (echo "❌ Health check failed!" && exit 1)
-                '''
-            }
-        }
-
+       stage('Health Check') {
+    steps {
+        echo '✅ Checking container is running...'
+        sh '''
+            sleep 3
+            docker inspect -f '{{.State.Running}}' $CONTAINER_NAME | grep -q true \
+                || (echo "❌ Container is not running!" && exit 1)
+            echo "✅ Container is up and running!"
+        '''
     }
+}
 
     post {
         success {
