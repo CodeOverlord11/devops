@@ -12,9 +12,9 @@ scrape_configs:
   # Host machine metrics (CPU, RAM, disk)
   - job_name: 'node-exporter'
     static_configs:
-      - targets: ['node-exporter:9100']
+      - targets: ['localhost:9100']
 
   # nginx container metrics
   - job_name: 'nginx'
     static_configs:
-      - targets: ['nginx-exporter:9113']
+      - targets: ['localhost:9113']
