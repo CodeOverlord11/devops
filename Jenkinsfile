@@ -16,6 +16,19 @@ pipeline {
             }
         }
 
+        stage('Test HTML') {
+            steps {
+                echo '🧪 Validating HTML files...'
+                sh '''
+                    # Install htmlhint if not already installed
+                    npm list -g htmlhint || npm install -g htmlhint
+
+                    # Run validation on all HTML files
+                    htmlhint **/*.html || htmlhint *.html
+                '''
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 echo '🐳 Building nginx Docker image...'
@@ -62,7 +75,7 @@ pipeline {
 
     post {
         success {
-            echo '🎉 Deployment successful! Your site is live.'
+            echo '🎉 All tests passed! Deployment successful. Your site is live.'
         }
         failure {
             echo '❌ Pipeline failed. Check the logs above.'
